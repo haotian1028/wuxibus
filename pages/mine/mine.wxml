@@ -1,0 +1,21 @@
+
+<view class="mine">
+<!-- avatar -->
+<block wx:if="{{routeflag}}">
+    <l-list  left-gap='20' title="{{routemsg}}"  link-type="navigateTo" url="{{routeurl}}"/>
+</block>
+   <block wx:for="{{datalist}}" wx:key="index">
+    <l-list title="{{item.name}}" right-desc="{{item.time}}"  left-gap='20' icon="address" bind:lintap="ontap" tag-content="RT1去程" data-index="{{index}}" data-item="{{item}}" />
+</block>
+<block wx:for="{{datalist2}}" wx:key="index">
+    <l-list title="{{item.name}}" right-desc="{{item.time}}"  left-gap='20' icon="address" bind:lintap="ontap" tag-content="RT1回程" data-index="{{index}}" data-item="{{item}}" tag-color="#F4516c"/>
+</block>
+<block wx:for="{{datalist3}}" wx:key="index">
+    <l-list title="{{item.name}}" right-desc="{{item.time}}"  left-gap='20' icon="address" bind:lintap="ontap" tag-content="RT2去程" data-index="{{index}}" data-item="{{item}}" tag-color="#00F16c"/>
+</block>
+<block wx:for="{{datalist4}}" wx:key="index">
+    <l-list title="{{item.name}}" right-desc="{{item.time}}"  left-gap='20' icon="address" bind:lintap="ontap" tag-content="RT2回程" data-index="{{index}}" data-item="{{item}}" tag-color="#F45000"/>
+</block>
+ 
+</view>
+

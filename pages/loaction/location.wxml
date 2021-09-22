@@ -1,0 +1,14 @@
+<!--pages/loaction/location.wxml-->
+<view>
+<map 
+  id="123"
+  class="map"
+  latitude="{{latitude}}"
+  longitude="{{longitude}}"
+  markers="{{markers}}"
+  polyline="{{polyline}}"
+  scale="{{scale}}"
+  enable-3D="true"
+  bindtap="startroute"
+></map>
+</view>

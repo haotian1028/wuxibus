@@ -1,0 +1,8 @@
+/* pages/loaction/location.wxss */
+.page{
+  height: 100%;
+}
+.map {
+  width: 100%;
+  height: 100vh;
+}

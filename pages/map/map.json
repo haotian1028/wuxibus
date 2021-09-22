@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "l-list":"/miniprogram_npm/lin-ui/list/index",
+    "l-action-sheet":"/miniprogram_npm/lin-ui/action-sheet/index",
+    "l-card":"/miniprogram_npm/lin-ui/card/index"
+  }
+
+  
+}

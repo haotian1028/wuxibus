@@ -1,0 +1,14 @@
+<!--index.wxml-->
+
+<view class="route1">
+    <l-list left-gap='20' title="Route 1" desc="{{rt1msg1}}" right-desc="去程" icon="up" link-type="navigateTo" url="../map/map?route=route1-1f"/>
+    <l-list left-gap='20' title="Route 1" desc="{{rt1msg2}}" right-desc="回程" icon="down" link-type="navigateTo" url="../map/map?route=route1-2f"/>
+</view>
+<view class="route2">
+    <l-list left-gap='20' title="Route 2" desc="{{rt2msg1}}" right-desc="去程" icon="up" link-type="navigateTo" url="../map/map?route=route2-1f"/>
+    <l-list left-gap='20' title="Route 2" desc="{{rt2msg2}}" right-desc="回程" icon="down" link-type="navigateTo" url="../map/map?route=route2-2f"/>
+    
+</view>
+
+
+
