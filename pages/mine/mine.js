@@ -8,21 +8,59 @@ let referer = 'wuxi bus'; //调用插件的app的名称
 wx.cloud.init()
 Page({
 
+  ifHere: function (positon) {//附近50m的距离，如果到站的话司机的面板上的等待人数会自动减去1
+    if ((((positon.latitude - 0.000899) <= positon.curLatitude) && ((positon.latitude + 0.000899) >= positon.curLatitude)) && (((positon.longitude - 0.001141) <= positon.curLongitude) && ((positon.longitude + 0.001141) >= positon.curLongitude))) {
+      return true;
+    } else {
+      return false;
+    }
+  },
+
+
   ontap: function (options) {
-    console.log("点击获取的数据", options.currentTarget.dataset.item.tag)
+    var that=this;
+    console.log("点击获取的数据", options.currentTarget.dataset.item);
+    var position = {
+      'latitude': options.currentTarget.dataset.item.latitude,
+      'longitude': options.currentTarget.dataset.item.longitude,
+      'curLatitude': "",
+      'curLongitude': "",
+    }
+
     let endPoint1 = JSON.stringify({ //终点
       'name': options.currentTarget.dataset.item.name,
       'latitude': options.currentTarget.dataset.item.latitude,
       'longitude': options.currentTarget.dataset.item.longitude,
     });
-    wx.navigateTo({
-      url: 'plugin://routePlan/index?key=' + key + '&referer=' + referer + '&endPoint=' + endPoint1 + '&mode=' + "walking"
+    // wx.navigateTo({
+    //   url: 'plugin://routePlan/index?key=' + key + '&referer=' + referer + '&endPoint=' + endPoint1 + '&mode=' + "walking"
+    // })
+
+    //点击触发我将会迟到选项,在此之前判断①是否过站，②是否到达班车运营时间
+    wx.startLocationUpdateBackground({
+      success: (res) => {
+        console.log("success" + res);
+      },
+      fail: (res) => {
+        console.log(res);
+        wx.authorize({
+          scope: 'scope.userLocationBackground'
+        }); //authorize
+      }
     })
+    wx.onLocationChange(function (res) {
+      console.log('location change', res);
+       position = {
+        'latitude': options.currentTarget.dataset.item.latitude,
+        'longitude': options.currentTarget.dataset.item.longitude,
+        'curLatitude': res.latitude,
+        'curLongitude': res.longitude,
+      }
 
-
+      console.log(position);
+      console.log(that.ifHere(position));
+    })
     // this.onLoad();
-
-
   },
 
   ifRunTime: function (route) {
@@ -31,10 +69,10 @@ Page({
     starttime0.setHours(7);
     starttime0.setMinutes(40);
     var stoptime0 = new Date(); //去程结束时间
-    stoptime0.setHours(9);
+    stoptime0.setHours(19);
     stoptime0.setMinutes(20);
     var starttime1 = new Date(); //回程开始时间
-    starttime1.setHours(8);//Should be 18
+    starttime1.setHours(18); //Should be 18
     starttime1.setMinutes(1);
     var stoptime1 = new Date(); //回程结束时间
     stoptime1.setHours(19);
@@ -66,6 +104,7 @@ Page({
     routeflag: false,
     routeurl: "",
     routemsg: "师傅的专属位置上传界面，未到运行时间",
+    loading: true
 
   },
 
@@ -81,7 +120,7 @@ Page({
       }
     }).then(res => {
       console.log(res.result.openid)
-      if(true){//res.result.openid == "oB9mv5ZPafuTiWT9dSpS3cglffG8") {
+      if (true) { //res.result.openid == "oB9mv5ZPafuTiWT9dSpS3cglffG8") {
         if (that.ifRunTime("route1-1f")) {
           that.setData({
             routeflag: true,
@@ -124,10 +163,16 @@ Page({
         })
         .get()
         .then(res => {
-          console.log("获取成功", res)
+          
+          var len=res.data.length;
+          for(var i=0;i<len;i++){
+            res.data[i]['route']='route1-1f'
+          }
           this.setData({
             datalist: res.data
           })
+          console.log(res.data);
+         
           //console.log("datalist:", datalist.data)
         })
         .catch(res => {
@@ -140,11 +185,16 @@ Page({
         })
         .get()
         .then(res => {
-          console.log("获取成功", res)
+          
+          var len=res.data.length;
+          for(var i=0;i<len;i++){
+            console.log(res.data[i]);
+            res.data[i]['route']='route1-2f'
+          }
           this.setData({
             datalist2: res.data
           })
-          //console.log("datalist:", datalist.data)
+          
         })
         .catch(res => {
           console.log("获取失败", res)
@@ -157,11 +207,15 @@ Page({
         })
         .get()
         .then(res => {
-          console.log("获取成功", res)
+          
+          var len=res.data.length;
+          for(var i=0;i<len;i++){
+            console.log(res.data[i]);
+            res.data[i]['route']='route2-1f'
+          }
           this.setData({
             datalist3: res.data
           })
-          //console.log("datalist:", datalist.data)
         })
         .catch(res => {
           console.log("获取失败", res)
@@ -174,11 +228,15 @@ Page({
         })
         .get()
         .then(res => {
-          console.log("获取成功", res)
+          
+          var len=res.data.length;
+          for(var i=0;i<len;i++){
+            console.log(res.data[i]);
+            res.data[i]['route']='route2-2f'
+          }
           this.setData({
             datalist4: res.data
           })
-          //console.log("datalist:", datalist.data)
         })
         .catch(res => {
           console.log("获取失败", res)
@@ -193,18 +251,25 @@ Page({
    */
   onReady: function () {
 
+
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {},
+  onShow: function () {
+    this.setData({
+      loading: false
+    })
+    this.onLoad();
+  },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    //this.onUnload();
+    this.onUnload();
+    console.log("!!!exit")
 
   },
 

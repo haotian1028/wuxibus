@@ -1,4 +1,5 @@
 /* pages/mine/mine.wxss */
+@import "./mine.skeleton.wxss";
 .card-dot {
   width: 18rpx;
   height: 18rpx;
@@ -19,7 +20,7 @@
   font-size: 28rpx;
   font-family: PingFangSC-Regular;
   font-weight: 400;
-  color: rgba(69, 82, 107, 1);
+  color: rgb(56, 90, 151);
   line-height: 20px;
   margin-left: 8px;
 }
