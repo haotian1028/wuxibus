@@ -19,7 +19,7 @@ Page({
     // 根据index找到test对应索引中对应要修改的参数
     let ifCollected = "datalist[" + index + "].ifcollcected";
     let Tag = "datalist[" + index + "].tag";
-    console.log("点击获取的数据", options.currentTarget.dataset.item.tag)
+    console.log("点击获取的数据", options.currentTarget.dataset)
 
     if (options.currentTarget.dataset.item.ifcollected == false) {
       wx.showActionSheet({
@@ -137,7 +137,7 @@ Page({
     stoptime0.setHours(9);
     stoptime0.setMinutes(20);
     var starttime1 = new Date(); //回程开始时间
-    starttime1.setHours(8); //Should be 18
+    starttime1.setHours(18); //Should be 18
     starttime1.setMinutes(1);
     var stoptime1 = new Date(); //回程结束时间
     stoptime1.setHours(19);
@@ -178,6 +178,7 @@ Page({
   onLoad: function (options) {
     var openid_;
     route = options.route;
+    console.log(route);
     switch (route) {
       case "route1-1f":
         this.setData({
@@ -252,7 +253,6 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    this.getBusData();
 
 
   },
@@ -305,7 +305,7 @@ Page({
         route11msg0: "班车运行中"
       }) //只用处于运行时间时才自动查询数据库
       //先执行一次
-      //that.getBusData();
+      that.getBusData();
       a = setInterval(function () {
         //循环执行代码 
         that.getBusData();

@@ -1,0 +1,237 @@
+<!--
+此文件为开发者工具生成，生成时间: 9/22/2021, 1:18:10 PM
+使用方法：
+在 C:\Users\t-haozhang\WeChatProjects\miniprogram-7\pages\mine\mine.wxml 引入模板
+
+```
+<import src="mine.skeleton.wxml"/>
+<template is="skeleton" wx-if="{{loading}}" />
+```
+
+在 C:\Users\t-haozhang\WeChatProjects\miniprogram-7\pages\mine\mine.wxss 中引入样式
+```
+@import "./mine.skeleton.wxss";
+```
+
+更多详细信息可以参考文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/skeleton.html
+-->
+<template name="skeleton">
+  <view class="sk-container">
+    <view class="mine">
+      <view is="miniprogram_npm/lin-ui/list/index">
+        <view class="list-index--l-list " data-link-type="navigateTo" data-url="../getloaction/getlocation?route=route1-1f" hover-class="l-list-hover" hover-start-time="20" hover-stay-time="50" style="padding-left: 8px; border: none;">
+          <view class="list-index--left-section">
+            <view class="list-index--l-text">
+              <view class="sk-transparent sk-text-14-2857-778 sk-text">RT1去程运行时间，请点击此按钮</view>
+            </view>
+          </view>
+          <view class="list-index--right-section  ">
+            <view is="miniprogram_npm/lin-ui/icon/index">
+              <view class="l-icon icon-index--l-icon l-icon-right icon-index--l-icon-right sk-pseudo sk-pseudo-circle" style="font-size:11px;color:#8c98ae;"></view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view is="miniprogram_npm/lin-ui/list/index" data-index="0" data-item="[object Object]">
+        <view class="list-index--l-list " data-link-type="navigateTo" data-url="true" hover-class="l-list-hover" hover-start-time="20" hover-stay-time="50" style="padding-left: 8px; border: none;">
+          <view class="list-index--left-section">
+            <view is="miniprogram_npm/lin-ui/icon/index">
+              <view class="list-index--l-icon l-icon icon-index--l-icon l-icon-address icon-index--l-icon-address sk-pseudo sk-pseudo-circle" style="font-size:11px;color:#3963BC;"></view>
+            </view>
+            <view class="list-index--l-text">
+              <view class="sk-transparent sk-text-14-2857-355 sk-text">火车站北广场</view>
+            </view>
+            <view is="miniprogram_npm/lin-ui/tag/index">
+              <view style="display:flex">
+                <view class="tag-index--l-tag tag-index--l-tag-touch tag-index--l-tag-mini list-index--cell-tag tag-index--l-tag-mini-square" style="background-color:;color:">
+                  <view class="tag-index--content sk-transparent sk-text-14-2857-309 sk-text" style="true">RT1去程</view>
+                </view>
+              </view>
+            </view>
+          </view>
+          <view class="list-index--right-section  ">
+            <view class="list-index--l-text sk-transparent sk-text-8-3333-555 sk-text">7:54</view>
+            <view is="miniprogram_npm/lin-ui/icon/index">
+              <view class="l-icon icon-index--l-icon l-icon-right icon-index--l-icon-right sk-pseudo sk-pseudo-circle" style="font-size:11px;color:#8c98ae;"></view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view is="miniprogram_npm/lin-ui/list/index" data-index="1" data-item="[object Object]">
+        <view class="list-index--l-list " data-link-type="navigateTo" data-url="true" hover-class="l-list-hover" hover-start-time="20" hover-stay-time="50" style="padding-left: 8px; border: none;">
+          <view class="list-index--left-section">
+            <view is="miniprogram_npm/lin-ui/icon/index">
+              <view class="list-index--l-icon l-icon icon-index--l-icon l-icon-address icon-index--l-icon-address sk-pseudo sk-pseudo-circle" style="font-size:11px;color:#3963BC;"></view>
+            </view>
+            <view class="list-index--l-text">
+              <view class="sk-transparent sk-text-14-2857-912 sk-text">新吴区欧尚</view>
+            </view>
+            <view is="miniprogram_npm/lin-ui/tag/index">
+              <view style="display:flex">
+                <view class="tag-index--l-tag tag-index--l-tag-touch tag-index--l-tag-mini list-index--cell-tag tag-index--l-tag-mini-square" style="background-color:;color:">
+                  <view class="tag-index--content sk-transparent sk-text-14-2857-156 sk-text" style="true">RT1去程</view>
+                </view>
+              </view>
+            </view>
+          </view>
+          <view class="list-index--right-section  ">
+            <view class="list-index--l-text sk-transparent sk-text-8-3333-923 sk-text">8:07</view>
+            <view is="miniprogram_npm/lin-ui/icon/index">
+              <view class="l-icon icon-index--l-icon l-icon-right icon-index--l-icon-right sk-pseudo sk-pseudo-circle" style="font-size:11px;color:#8c98ae;"></view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view is="miniprogram_npm/lin-ui/list/index" data-index="2" data-item="[object Object]">
+        <view class="list-index--l-list " data-link-type="navigateTo" data-url="true" hover-class="l-list-hover" hover-start-time="20" hover-stay-time="50" style="padding-left: 8px; border: none;">
+          <view class="list-index--left-section">
+            <view is="miniprogram_npm/lin-ui/icon/index">
+              <view class="list-index--l-icon l-icon icon-index--l-icon l-icon-address icon-index--l-icon-address sk-pseudo sk-pseudo-circle" style="font-size:11px;color:#3963BC;"></view>
+            </view>
+            <view class="list-index--l-text">
+              <view class="sk-transparent sk-text-14-2857-836 sk-text">朗诗青春未来家园</view>
+            </view>
+            <view is="miniprogram_npm/lin-ui/tag/index">
+              <view style="display:flex">
+                <view class="tag-index--l-tag tag-index--l-tag-touch tag-index--l-tag-mini list-index--cell-tag tag-index--l-tag-mini-square" style="background-color:;color:">
+                  <view class="tag-index--content sk-transparent sk-text-14-2857-505 sk-text" style="true">RT1去程</view>
+                </view>
+              </view>
+            </view>
+          </view>
+          <view class="list-index--right-section  ">
+            <view class="list-index--l-text sk-transparent sk-text-8-3333-728 sk-text">8:40</view>
+            <view is="miniprogram_npm/lin-ui/icon/index">
+              <view class="l-icon icon-index--l-icon l-icon-right icon-index--l-icon-right sk-pseudo sk-pseudo-circle" style="font-size:11px;color:#8c98ae;"></view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view is="miniprogram_npm/lin-ui/list/index" data-index="3" data-item="[object Object]">
+        <view class="list-index--l-list " data-link-type="navigateTo" data-url="true" hover-class="l-list-hover" hover-start-time="20" hover-stay-time="50" style="padding-left: 8px; border: none;">
+          <view class="list-index--left-section">
+            <view is="miniprogram_npm/lin-ui/icon/index">
+              <view class="list-index--l-icon l-icon icon-index--l-icon l-icon-address icon-index--l-icon-address sk-pseudo sk-pseudo-circle" style="font-size:11px;color:#3963BC;"></view>
+            </view>
+            <view class="list-index--l-text">
+              <view class="sk-transparent sk-text-14-2857-631 sk-text">国信世家璞园</view>
+            </view>
+            <view is="miniprogram_npm/lin-ui/tag/index">
+              <view style="display:flex">
+                <view class="tag-index--l-tag tag-index--l-tag-touch tag-index--l-tag-mini list-index--cell-tag tag-index--l-tag-mini-square" style="background-color:;color:">
+                  <view class="tag-index--content sk-transparent sk-text-14-2857-425 sk-text" style="true">RT1去程</view>
+                </view>
+              </view>
+            </view>
+          </view>
+          <view class="list-index--right-section  ">
+            <view class="list-index--l-text sk-transparent sk-text-8-3333-338 sk-text">8:14</view>
+            <view is="miniprogram_npm/lin-ui/icon/index">
+              <view class="l-icon icon-index--l-icon l-icon-right icon-index--l-icon-right sk-pseudo sk-pseudo-circle" style="font-size:11px;color:#8c98ae;"></view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view is="miniprogram_npm/lin-ui/list/index" data-index="0" data-item="[object Object]">
+        <view class="list-index--l-list " data-link-type="navigateTo" data-url="true" hover-class="l-list-hover" hover-start-time="20" hover-stay-time="50" style="padding-left: 8px; border: none;">
+          <view class="list-index--left-section">
+            <view is="miniprogram_npm/lin-ui/icon/index">
+              <view class="list-index--l-icon l-icon icon-index--l-icon l-icon-address icon-index--l-icon-address sk-pseudo sk-pseudo-circle" style="font-size:11px;color:#3963BC;"></view>
+            </view>
+            <view class="list-index--l-text">
+              <view class="sk-transparent sk-text-14-2857-317 sk-text">海豚A座</view>
+            </view>
+            <view is="miniprogram_npm/lin-ui/tag/index">
+              <view style="display:flex">
+                <view class="tag-index--l-tag tag-index--l-tag-touch tag-index--l-tag-mini list-index--cell-tag tag-index--l-tag-mini-square" style="background-color:#F4516c;color:">
+                  <view class="tag-index--content sk-transparent sk-text-14-2857-364 sk-text" style="true">RT1回程</view>
+                </view>
+              </view>
+            </view>
+          </view>
+          <view class="list-index--right-section  ">
+            <view class="list-index--l-text sk-transparent sk-text-8-3333-860 sk-text">18:05</view>
+            <view is="miniprogram_npm/lin-ui/icon/index">
+              <view class="l-icon icon-index--l-icon l-icon-right icon-index--l-icon-right sk-pseudo sk-pseudo-circle" style="font-size:11px;color:#8c98ae;"></view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view is="miniprogram_npm/lin-ui/list/index" data-index="0" data-item="[object Object]">
+        <view class="list-index--l-list " data-link-type="navigateTo" data-url="true" hover-class="l-list-hover" hover-start-time="20" hover-stay-time="50" style="padding-left: 8px; border: none;">
+          <view class="list-index--left-section">
+            <view is="miniprogram_npm/lin-ui/icon/index">
+              <view class="list-index--l-icon l-icon icon-index--l-icon l-icon-address icon-index--l-icon-address sk-pseudo sk-pseudo-circle" style="font-size:11px;color:#3963BC;"></view>
+            </view>
+            <view class="list-index--l-text">
+              <view class="sk-transparent sk-text-14-2857-549 sk-text">九龙仓时代上城</view>
+            </view>
+            <view is="miniprogram_npm/lin-ui/tag/index">
+              <view style="display:flex">
+                <view class="tag-index--l-tag tag-index--l-tag-touch tag-index--l-tag-mini list-index--cell-tag tag-index--l-tag-mini-square" style="background-color:#00F16c;color:">
+                  <view class="tag-index--content sk-transparent sk-text-14-2857-198 sk-text" style="true">RT2去程</view>
+                </view>
+              </view>
+            </view>
+          </view>
+          <view class="list-index--right-section  ">
+            <view class="list-index--l-text sk-transparent sk-text-8-3333-788 sk-text">8:10</view>
+            <view is="miniprogram_npm/lin-ui/icon/index">
+              <view class="l-icon icon-index--l-icon l-icon-right icon-index--l-icon-right sk-pseudo sk-pseudo-circle" style="font-size:11px;color:#8c98ae;"></view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view is="miniprogram_npm/lin-ui/list/index" data-index="0" data-item="[object Object]">
+        <view class="list-index--l-list " data-link-type="navigateTo" data-url="true" hover-class="l-list-hover" hover-start-time="20" hover-stay-time="50" style="padding-left: 8px; border: none;">
+          <view class="list-index--left-section">
+            <view is="miniprogram_npm/lin-ui/icon/index">
+              <view class="list-index--l-icon l-icon icon-index--l-icon l-icon-address icon-index--l-icon-address sk-pseudo sk-pseudo-circle" style="font-size:11px;color:#3963BC;"></view>
+            </view>
+            <view class="list-index--l-text">
+              <view class="sk-transparent sk-text-14-2857-778 sk-text">尺马渚桥</view>
+            </view>
+            <view is="miniprogram_npm/lin-ui/tag/index">
+              <view style="display:flex">
+                <view class="tag-index--l-tag tag-index--l-tag-touch tag-index--l-tag-mini list-index--cell-tag tag-index--l-tag-mini-square" style="background-color:#F45000;color:">
+                  <view class="tag-index--content sk-transparent sk-text-14-2857-206 sk-text" style="true">RT2回程</view>
+                </view>
+              </view>
+            </view>
+          </view>
+          <view class="list-index--right-section  ">
+            <view class="list-index--l-text sk-transparent sk-text-8-3333-41 sk-text">19:00</view>
+            <view is="miniprogram_npm/lin-ui/icon/index">
+              <view class="l-icon icon-index--l-icon l-icon-right icon-index--l-icon-right sk-pseudo sk-pseudo-circle" style="font-size:11px;color:#8c98ae;"></view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view is="miniprogram_npm/lin-ui/list/index" data-index="1" data-item="[object Object]">
+        <view class="list-index--l-list " data-link-type="navigateTo" data-url="true" hover-class="l-list-hover" hover-start-time="20" hover-stay-time="50" style="padding-left: 8px; border: none;">
+          <view class="list-index--left-section">
+            <view is="miniprogram_npm/lin-ui/icon/index">
+              <view class="list-index--l-icon l-icon icon-index--l-icon l-icon-address icon-index--l-icon-address sk-pseudo sk-pseudo-circle" style="font-size:11px;color:#3963BC;"></view>
+            </view>
+            <view class="list-index--l-text">
+              <view class="sk-transparent sk-text-14-2857-690 sk-text">建筑路愉憬湾</view>
+            </view>
+            <view is="miniprogram_npm/lin-ui/tag/index">
+              <view style="display:flex">
+                <view class="tag-index--l-tag tag-index--l-tag-touch tag-index--l-tag-mini list-index--cell-tag tag-index--l-tag-mini-square" style="background-color:#F45000;color:">
+                  <view class="tag-index--content sk-transparent sk-text-14-2857-284 sk-text" style="true">RT2回程</view>
+                </view>
+              </view>
+            </view>
+          </view>
+          <view class="list-index--right-section  ">
+            <view class="list-index--l-text sk-transparent sk-text-8-3333-124 sk-text">19:08</view>
+            <view is="miniprogram_npm/lin-ui/icon/index">
+              <view class="l-icon icon-index--l-icon l-icon-right icon-index--l-icon-right sk-pseudo sk-pseudo-circle" style="font-size:11px;color:#8c98ae;"></view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
