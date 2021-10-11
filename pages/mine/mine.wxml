@@ -5,6 +5,11 @@
     <block wx:if="{{routeflag}}">
         <l-list left-gap='20' title="{{routemsg}}" link-type="navigateTo" url="{{routeurl}}" />
     </block>
+    <l-dialog 
+  show="{{notice}}"
+  type="alert"  
+  show-title="{{false}}"
+  content="{{content}}" />
     <block wx:for="{{datalist}}" wx:key="index" margin-top="50px">
         <!-- <l-card type="primary" plaintext="{{true}}" title="{{item.name}}" bind:lintap="ontap11">
             <view class="content">
@@ -15,20 +20,20 @@
         </l-card> -->
 
         <l-list title="{{item.name}}" right-desc="{{item.time}}" left-gap='20' icon="address" bind:lintap="ontap"
-            tag-content="RT1去程" data-index="{{index}}" data-item="{{item}}" tag-color="#F0016c" />
+            tag-content="{{item.Tag}}" data-index="{{index}}" data-item="{{item}}" tag-color="#F0016c" />
 
     </block>
     <block wx:for="{{datalist2}}" wx:key="index">
         <l-list title="{{item.name}}" right-desc="{{item.time}}" left-gap='20' icon="address" bind:lintap="ontap"
-            tag-content="RT1回程" data-index="{{index}}" data-item="{{item}}" tag-color="#F4516c" />
+            tag-content="{{item.Tag}}" data-index="{{index}}" data-item="{{item}}" tag-color="#F4516c" />
     </block>
     <block wx:for="{{datalist3}}" wx:key="index">
         <l-list title="{{item.name}}" right-desc="{{item.time}}" left-gap='20' icon="address" bind:lintap="ontap"
-            tag-content="RT2去程" data-index="{{index}}" data-item="{{item}}" tag-color="#00F16c" />
+            tag-content="{{item.Tag}}" data-index="{{index}}" data-item="{{item}}" tag-color="#00F16c" />
     </block>
     <block wx:for="{{datalist4}}" wx:key="index">
         <l-list title="{{item.name}}" right-desc="{{item.time}}" left-gap='20' icon="address" bind:lintap="ontap"
-            tag-content="RT2回程" data-index="{{index}}" data-item="{{item}}" tag-color="#F45000" />
+            tag-content="{{item.Tag}}" data-index="{{index}}" data-item="{{item}}" tag-color="#F45000" />
     </block>
 
 </view>

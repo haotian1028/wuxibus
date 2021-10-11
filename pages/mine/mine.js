@@ -8,7 +8,7 @@ let referer = 'wuxi bus'; //调用插件的app的名称
 wx.cloud.init()
 Page({
 
-  ifHere: function (positon) {//附近50m的距离，如果到站的话司机的面板上的等待人数会自动减去1
+  ifHere: function (positon) { //附近50m的距离，如果到站的话司机的面板上的等待人数会自动减去1
     if ((((positon.latitude - 0.000899) <= positon.curLatitude) && ((positon.latitude + 0.000899) >= positon.curLatitude)) && (((positon.longitude - 0.001141) <= positon.curLongitude) && ((positon.longitude + 0.001141) >= positon.curLongitude))) {
       return true;
     } else {
@@ -18,8 +18,9 @@ Page({
 
 
   ontap: function (options) {
-    var that=this;
+    var that = this;
     console.log("点击获取的数据", options.currentTarget.dataset.item);
+    var index = options.currentTarget.dataset.index;
     var position = {
       'latitude': options.currentTarget.dataset.item.latitude,
       'longitude': options.currentTarget.dataset.item.longitude,
@@ -32,11 +33,238 @@ Page({
       'latitude': options.currentTarget.dataset.item.latitude,
       'longitude': options.currentTarget.dataset.item.longitude,
     });
-    // wx.navigateTo({
-    //   url: 'plugin://routePlan/index?key=' + key + '&referer=' + referer + '&endPoint=' + endPoint1 + '&mode=' + "walking"
-    // })
+    console.log("first" + options.currentTarget.dataset.item.reserve)
+    if (options.currentTarget.dataset.item.reserve == false) {
+      wx.showActionSheet({
+        itemList: [
+          '导航',
+          '预约到站'
+        ],
+        success(res) {
+          if (res.tapIndex == 0) {
+            wx.navigateTo({
+              url: 'plugin://routePlan/index?key=' + key + '&referer=' + referer + '&endPoint=' + endPoint1 + '&mode=' + "walking"
+            })
+          }
+          if (res.tapIndex == 1) {
 
-    //点击触发我将会迟到选项,在此之前判断①是否过站，②是否到达班车运营时间
+            //点击触发我将会迟到选项,在此之前判断①是否过站，②是否到达班车运营时间
+            wx.startLocationUpdateBackground({
+              success: (res) => {
+                console.log("success" + res);
+              },
+              fail: (res) => {
+                console.log(res);
+                wx.authorize({
+                  scope: 'scope.userLocationBackground'
+                }); //authorize
+              }
+            })
+            wx.onLocationChange(function (res) { //持续获得位置
+              console.log('location change', res);
+              position = {
+                'latitude': options.currentTarget.dataset.item.latitude,
+                'longitude': options.currentTarget.dataset.item.longitude,
+                'curLatitude': res.latitude,
+                'curLongitude': res.longitude,
+              }
+
+              // console.log(position);
+              console.log(that.ifHere(position));
+              if (that.ifHere(position)) {
+                wx.stopLocationUpdate()
+                console.log(that.ifHere(position));
+                console.log("已到达站点")
+                that.setData({
+                  notice: true,
+                  content: "您已经到达" + options.currentTarget.dataset.item.name + ", 到站预约将取消"
+                })
+
+
+                //点击触发我将会迟到选项,在此之前判断①是否过站，②是否到达班车运营时间
+
+                switch (options.currentTarget.dataset.item.route) {
+                  case "route1-1f":
+                    var list = "datalist";
+                    var TAG = "RT1去程"
+                    break;
+                  case "route1-2f":
+                    var list = "datalist2";
+                    var TAG = "RT1回程"
+                    break;
+                  case "route2-1f":
+                    var list = "datalist3";
+                    var TAG = "RT2去程"
+                    break;
+                  case "route2-2f":
+                    var list = "datalist4";
+                    var TAG = "RT2回程"
+                    break;
+                }
+
+                let Tag = list + "[" + index + "].Tag";
+                let Flag = list + "[" + index + "].reserve";
+
+
+                wx.cloud.callFunction({
+                    name: "reserve",
+                    data: {
+                      route: options.currentTarget.dataset.item.route,
+                      id: options.currentTarget.dataset.item._id,
+                      flag: false,
+                    }
+                  }).then(res => {
+                    console.log("成功取消预约", res)
+                    wx.stopLocationUpdate();
+
+                    that.setData({
+                      [Tag]: TAG,
+                      [Flag]: false,
+                    })
+                    console.log(Name)
+                    options.currentTarget.dataset.reserve = false;
+                    console.log(options.currentTarget.dataset.reserve)
+                  })
+                  .catch(res => {
+                    console.log("改变预约状态失败", res)
+                  })
+
+              }
+
+            })
+            switch (options.currentTarget.dataset.item.route) {
+              case "route1-1f":
+                var list = "datalist";
+                var TAG = "RT1去程"
+                break;
+              case "route1-2f":
+                var list = "datalist2";
+                var TAG = "RT1回程"
+                break;
+              case "route2-1f":
+                var list = "datalist3";
+                var TAG = "RT2去程"
+                break;
+              case "route2-2f":
+                var list = "datalist4";
+                var TAG = "RT2回程"
+                break;
+            }
+
+            let Tag = list + "[" + index + "].Tag";
+            let Flag = list + "[" + index + "].reserve";
+
+
+            wx.cloud.callFunction({
+                name: "reserve",
+                data: {
+                  route: options.currentTarget.dataset.item.route,
+                  id: options.currentTarget.dataset.item._id,
+                  flag: true,
+                }
+              }).then(res => {
+                console.log("成功预约", res)
+                that.setData({
+                  [Tag]: TAG + ", 已预约",
+                  [Flag]: true
+                })
+                options.currentTarget.dataset.reserve = true;
+                console.log("later" + options.currentTarget.dataset.reserve)
+
+              })
+              .catch(res => {
+                console.log("改变收藏状态失败", res)
+              })
+
+
+          }
+
+        }
+
+
+      })
+    } else if (options.currentTarget.dataset.item.reserve == true) {
+
+      wx.showActionSheet({
+        itemList: [
+          '导航',
+          '取消预约'
+        ],
+        success(res) {
+          if (res.tapIndex == 0) {
+            wx.navigateTo({
+              url: 'plugin://routePlan/index?key=' + key + '&referer=' + referer + '&endPoint=' + endPoint1 + '&mode=' + "walking"
+            })
+          }
+          if (res.tapIndex == 1) {
+
+            //点击触发我将会迟到选项,在此之前判断①是否过站，②是否到达班车运营时间
+
+            switch (options.currentTarget.dataset.item.route) {
+              case "route1-1f":
+                var list = "datalist";
+                var TAG = "RT1去程"
+                break;
+              case "route1-2f":
+                var list = "datalist2";
+                var TAG = "RT1回程"
+                break;
+              case "route2-1f":
+                var list = "datalist3";
+                var TAG = "RT2去程"
+                break;
+              case "route2-2f":
+                var list = "datalist4";
+                var TAG = "RT2回程"
+                break;
+            }
+
+            let Tag = list + "[" + index + "].Tag";
+            let Flag = list + "[" + index + "].reserve";
+
+
+            wx.cloud.callFunction({
+                name: "reserve",
+                data: {
+                  route: options.currentTarget.dataset.item.route,
+                  id: options.currentTarget.dataset.item._id,
+                  flag: false,
+                }
+              }).then(res => {
+                console.log("成功取消预约", res)
+                wx.stopLocationUpdate();
+
+                that.setData({
+                  [Tag]: TAG,
+                  [Flag]: false,
+                })
+
+                options.currentTarget.dataset.reserve = false;
+                console.log(options.currentTarget.dataset.reserve)
+              })
+              .catch(res => {
+                console.log("改变预约状态失败", res)
+              })
+
+          }
+
+        }
+
+
+      })
+
+    }
+
+
+
+    // this.onLoad();
+  },
+
+  Reserve: function (data) {
+    var position;
+    console.log(data)
+
+    var that = this;
     wx.startLocationUpdateBackground({
       success: (res) => {
         console.log("success" + res);
@@ -48,19 +276,78 @@ Page({
         }); //authorize
       }
     })
-    wx.onLocationChange(function (res) {
+    wx.onLocationChange(function (res) { //持续获得位置
       console.log('location change', res);
-       position = {
-        'latitude': options.currentTarget.dataset.item.latitude,
-        'longitude': options.currentTarget.dataset.item.longitude,
+      position = {
+        'latitude': data.latitude,
+        'longitude': data.longitude,
         'curLatitude': res.latitude,
         'curLongitude': res.longitude,
       }
 
-      console.log(position);
+       console.log(position);
       console.log(that.ifHere(position));
+      if (that.ifHere(position)) {
+        wx.stopLocationUpdate()
+        console.log(that.ifHere(position));
+        console.log("已到达站点")
+        that.setData({
+          notice: true,
+          content: "您已经到达" +data.name + ", 到站预约将取消"
+        })
+
+
+        //点击触发我将会迟到选项,在此之前判断①是否过站，②是否到达班车运营时间
+
+        switch (data.route) {
+          case "route1-1f":
+            var list = "datalist";
+            var TAG = "RT1去程"
+            break;
+          case "route1-2f":
+            var list = "datalist2";
+            var TAG = "RT1回程"
+            break;
+          case "route2-1f":
+            var list = "datalist3";
+            var TAG = "RT2去程"
+            break;
+          case "route2-2f":
+            var list = "datalist4";
+            var TAG = "RT2回程"
+            break;
+        }
+
+        let Tag = list + "[" + index + "].Tag";
+        let Flag = list + "[" + index + "].reserve";
+
+
+        wx.cloud.callFunction({
+            name: "reserve",
+            data: {
+              route: data.route,
+              id: data._id,
+              flag: false,
+            }
+          }).then(res => {
+            console.log("成功取消预约", res)
+            wx.stopLocationUpdate();
+
+            that.setData({
+              [Tag]: TAG,
+              [Flag]: false,
+            })
+            console.log(Name)
+            data.reserve = false;
+            console.log(data.reserve)
+          })
+          .catch(res => {
+            console.log("改变预约状态失败", res)
+          })
+      }
+
     })
-    // this.onLoad();
+
   },
 
   ifRunTime: function (route) {
@@ -97,6 +384,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    notice: false,
+    content: null,
     datalist: [],
     datalist2: [],
     datalist3: [],
@@ -104,7 +393,7 @@ Page({
     routeflag: false,
     routeurl: "",
     routemsg: "师傅的专属位置上传界面，未到运行时间",
-    loading: true
+    loading: true,
 
   },
 
@@ -163,16 +452,23 @@ Page({
         })
         .get()
         .then(res => {
-          
-          var len=res.data.length;
-          for(var i=0;i<len;i++){
-            res.data[i]['route']='route1-1f'
+
+          var len = res.data.length;
+          for (var i = 0; i < len; i++) {
+            res.data[i]['route'] = 'route1-1f'
+            if (res.data[i]['reserve'] == true) {
+              res.data[i]['Tag'] = "RT1去程, 已预约"
+              console.log(res.data[i]);
+              that.Reserve(res.data[i])//进入页面时重新载入定位检测
+            } else {
+              res.data[i]['Tag'] = "RT1去程"
+            }
           }
           this.setData({
             datalist: res.data
           })
           console.log(res.data);
-         
+
           //console.log("datalist:", datalist.data)
         })
         .catch(res => {
@@ -185,16 +481,24 @@ Page({
         })
         .get()
         .then(res => {
-          
-          var len=res.data.length;
-          for(var i=0;i<len;i++){
+
+          var len = res.data.length;
+          for (var i = 0; i < len; i++) {
             console.log(res.data[i]);
-            res.data[i]['route']='route1-2f'
+            res.data[i]['route'] = 'route1-2f'
+
+            if (res.data[i]['reserve'] == true) {
+              res.data[i]['Tag'] = "RT1回程, 已预约"
+              that.Reserve(res.data[i])//进入页面时重新载入定位检测
+
+            } else {
+              res.data[i]['Tag'] = "RT1回程"
+            }
           }
           this.setData({
             datalist2: res.data
           })
-          
+
         })
         .catch(res => {
           console.log("获取失败", res)
@@ -207,11 +511,17 @@ Page({
         })
         .get()
         .then(res => {
-          
-          var len=res.data.length;
-          for(var i=0;i<len;i++){
+
+          var len = res.data.length;
+          for (var i = 0; i < len; i++) {
             console.log(res.data[i]);
-            res.data[i]['route']='route2-1f'
+            res.data[i]['route'] = 'route2-1f'
+            if (res.data[i]['reserve'] == true) {
+              res.data[i]['Tag'] = "RT2去程, 已预约"
+              that.Reserve(res.data[i])//进入页面时重新载入定位检测
+            } else {
+              res.data[i]['Tag'] = "RT2去程"
+            }
           }
           this.setData({
             datalist3: res.data
@@ -228,11 +538,17 @@ Page({
         })
         .get()
         .then(res => {
-          
-          var len=res.data.length;
-          for(var i=0;i<len;i++){
+
+          var len = res.data.length;
+          for (var i = 0; i < len; i++) {
             console.log(res.data[i]);
-            res.data[i]['route']='route2-2f'
+            res.data[i]['route'] = 'route2-2f'
+            if (res.data[i]['reserve'] == true) {
+              res.data[i]['Tag'] = "RT2回程, 已预约"
+              that.Reserve(res.data[i])//进入页面时重新载入定位检测
+            } else {
+              res.data[i]['Tag'] = "RT2回程"
+            }
           }
           this.setData({
             datalist4: res.data
