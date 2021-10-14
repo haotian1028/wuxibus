@@ -19,7 +19,7 @@ Page({
 
   ontap: function (options) {
     var that = this;
-    console.log("点击获取的数据", options.currentTarget.dataset.item);
+    console.log("ONTAP!!!!!点击获取的数据", options.currentTarget.dataset.item);
     var index = options.currentTarget.dataset.index;
     var position = {
       'latitude': options.currentTarget.dataset.item.latitude,
@@ -73,12 +73,14 @@ Page({
               console.log(that.ifHere(position));
               if (that.ifHere(position)) {
                 wx.stopLocationUpdate()
-                console.log(that.ifHere(position));
-                console.log("已到达站点")
-                that.setData({
-                  notice: true,
-                  content: "您已经到达" + options.currentTarget.dataset.item.name + ", 到站预约将取消"
-                })
+
+                console.log("已到达站点" + options.currentTarget.dataset.item.name)
+                if (options.currentTarget.dataset.item.reserve == true) {
+                  that.setData({
+                    notice: true,
+                    content: "您已经到达" + options.currentTarget.dataset.item.name + ", 到站预约将取消"
+                  })
+                }
 
 
                 //点击触发我将会迟到选项,在此之前判断①是否过站，②是否到达班车运营时间
@@ -121,7 +123,7 @@ Page({
                       [Tag]: TAG,
                       [Flag]: false,
                     })
-                    console.log(Name)
+
                     options.currentTarget.dataset.reserve = false;
                     console.log(options.currentTarget.dataset.reserve)
                   })
@@ -260,7 +262,9 @@ Page({
     // this.onLoad();
   },
 
-  Reserve: function (data) {
+  Reserve: function (data, index) {
+
+    console.log("!!!" + index)
     var position;
     console.log(data)
 
@@ -285,15 +289,15 @@ Page({
         'curLongitude': res.longitude,
       }
 
-       console.log(position);
+      console.log(position);
       console.log(that.ifHere(position));
       if (that.ifHere(position)) {
         wx.stopLocationUpdate()
         console.log(that.ifHere(position));
-        console.log("已到达站点")
+
         that.setData({
           notice: true,
-          content: "您已经到达" +data.name + ", 到站预约将取消"
+          content: "您已经到达" + data.name + ", 到站预约将取消"
         })
 
 
@@ -337,7 +341,7 @@ Page({
               [Tag]: TAG,
               [Flag]: false,
             })
-            console.log(Name)
+
             data.reserve = false;
             console.log(data.reserve)
           })
@@ -459,7 +463,7 @@ Page({
             if (res.data[i]['reserve'] == true) {
               res.data[i]['Tag'] = "RT1去程, 已预约"
               console.log(res.data[i]);
-              that.Reserve(res.data[i])//进入页面时重新载入定位检测
+              that.Reserve(res.data[i], i) //进入页面时重新载入定位检测
             } else {
               res.data[i]['Tag'] = "RT1去程"
             }
@@ -489,7 +493,7 @@ Page({
 
             if (res.data[i]['reserve'] == true) {
               res.data[i]['Tag'] = "RT1回程, 已预约"
-              that.Reserve(res.data[i])//进入页面时重新载入定位检测
+              that.Reserve(res.data[i], i) //进入页面时重新载入定位检测
 
             } else {
               res.data[i]['Tag'] = "RT1回程"
@@ -518,7 +522,7 @@ Page({
             res.data[i]['route'] = 'route2-1f'
             if (res.data[i]['reserve'] == true) {
               res.data[i]['Tag'] = "RT2去程, 已预约"
-              that.Reserve(res.data[i])//进入页面时重新载入定位检测
+              that.Reserve(res.data[i], i) //进入页面时重新载入定位检测
             } else {
               res.data[i]['Tag'] = "RT2去程"
             }
@@ -545,7 +549,7 @@ Page({
             res.data[i]['route'] = 'route2-2f'
             if (res.data[i]['reserve'] == true) {
               res.data[i]['Tag'] = "RT2回程, 已预约"
-              that.Reserve(res.data[i])//进入页面时重新载入定位检测
+              that.Reserve(res.data[i], i) //进入页面时重新载入定位检测
             } else {
               res.data[i]['Tag'] = "RT2回程"
             }
@@ -574,10 +578,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.setData({
-      loading: false
-    })
-    this.onLoad();
+   
   },
 
   /**

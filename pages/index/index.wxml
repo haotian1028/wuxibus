@@ -1,14 +1,51 @@
 <!--index.wxml-->
 
-<view class="route1">
-    <l-list left-gap='20' title="Route 1" desc="{{rt1msg1}}" right-desc="去程" icon="up" link-type="navigateTo" url="../map/map?route=route1-1f"/>
-    <l-list left-gap='20' title="Route 1" desc="{{rt1msg2}}" right-desc="回程" icon="down" link-type="navigateTo" url="../map/map?route=route1-2f"/>
-</view>
-<view class="route2">
-    <l-list left-gap='20' title="Route 2" desc="{{rt2msg1}}" right-desc="去程" icon="up" link-type="navigateTo" url="../map/map?route=route2-1f"/>
-    <l-list left-gap='20' title="Route 2" desc="{{rt2msg2}}" right-desc="回程" icon="down" link-type="navigateTo" url="../map/map?route=route2-2f"/>
+
+
+<block wx:for="{{Datalist}}" wx:key="index">
+
+
+    <l-card type="avatar" l-class="card" image="{{item.icon}}" title="{{item.title}}" describe="{{item.msg2}}"
+        data-index="{{index}}" data-item="{{item}}" bindtap="Ontap">
+        <!-- 此处为content -->
+        <view class="avter-content">
+            {{item.msg}}
+        </view>
+        <view class="avter-share-container">
+        </view>
+        <l-tag shape="circle" bg-color="#f3f3f3" font-color="{{item.color}}" slot="more" size="large">
+            {{item.msg3}}
+        </l-tag>
+    </l-card>
+</block>
+
+<view class="mine">
+
+    <!-- 司机师傅专属代码块 -->
+    <block wx:if="{{routeflag}}">
+        <l-list left-gap='20' title="{{routemsg}}" link-type="navigateTo" url="{{routeurl}}" />
+    </block>
+
+
+    <block wx:for="{{ALLdatalist}}" wx:key="index">
+        <l-card type="avatar" l-class="card" image="/icon/favor.png" title="{{item.name}}" describe="收藏的站点"
+            data-index="{{index}}" data-item="{{item}}" bindtap="ontap">
+            <!-- 此处为content -->
+            <view class="avter-content">
+               到达时间： {{item.time}}
+            </view>
+            <view class="avter-share-container">
+            </view>
+            <l-tag shape="circle" bg-color="#f3f3f3" font-color="#124" slot="more" size="large">
+                {{item.Tag}}
+            </l-tag>
+        </l-card>
+    </block>
+
+    <l-dialog 
+  show="{{notice}}"
+  type="alert"  
+  show-title="{{false}}"
+  content="{{content}}" />
     
 </view>
-
-
-

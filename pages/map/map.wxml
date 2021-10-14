@@ -11,7 +11,7 @@
         </view>
         <l-tag  shape="circle" 
                 bg-color="#f3f3f3" 
-                font-color="#3963BC" 
+                font-color="#39FF" 
                 slot="more"
                 size="large">
                 {{routemsgtitle}}

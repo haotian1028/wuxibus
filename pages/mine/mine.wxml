@@ -1,6 +1,5 @@
 <view class="mine">
-    <import src="mine.skeleton.wxml" />
-    <template is="skeleton" wx-if="{{loading}}" />
+
     <!-- avatar -->
     <block wx:if="{{routeflag}}">
         <l-list left-gap='20' title="{{routemsg}}" link-type="navigateTo" url="{{routeurl}}" />

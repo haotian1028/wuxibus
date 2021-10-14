@@ -1,5 +1,5 @@
 /* pages/mine/mine.wxss */
-@import "./mine.skeleton.wxss";
+
 .card-dot {
   width: 18rpx;
   height: 18rpx;

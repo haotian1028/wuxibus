@@ -15,7 +15,8 @@ exports.main = async (event, context) => {
                 latitude:event.latitude,
                 longitude:event.longitude,
                 stopid:event.id,
-                openid:OPENID
+                openid:OPENID,
+                reserve:false
               }
             })
             .then(res=>{

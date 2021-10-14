@@ -134,7 +134,7 @@ Page({
     starttime0.setHours(7);
     starttime0.setMinutes(40);
     var stoptime0 = new Date(); //去程结束时间
-    stoptime0.setHours(9);
+    stoptime0.setHours(19);
     stoptime0.setMinutes(20);
     var starttime1 = new Date(); //回程开始时间
     starttime1.setHours(18); //Should be 18
