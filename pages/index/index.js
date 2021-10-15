@@ -77,7 +77,7 @@ Page({
     })
   },
   ontap: function (options) {
-    
+
     var that = this;
     console.log("ONTAP!!!!!点击获取的数据", options.currentTarget.dataset.index);
     var index = options.currentTarget.dataset.index;
@@ -119,21 +119,69 @@ Page({
                 }); //authorize
               }
             })
+            var flag = true;
             wx.onLocationChange(function (res) { //持续获得位置
-              console.log('location change', res);
+              //console.log('location change', res);
               position = {
                 'latitude': options.currentTarget.dataset.item.latitude,
                 'longitude': options.currentTarget.dataset.item.longitude,
+                'name': options.currentTarget.dataset.item.name,
                 'curLatitude': res.latitude,
                 'curLongitude': res.longitude,
               }
 
               // console.log(position);
-              console.log(that.ifHere(position));
-              if(that.ifHere(position)){
-                this.Reserve(options.currentTarget.dataset.item,index)
-              }
 
+              if (that.ifHere(position) && flag) {
+                console.log(options.currentTarget.dataset.item)
+                var data=options.currentTarget.dataset.item
+                console.log(data)
+               
+                flag = false;
+                
+                console.log("!!!" + that.ifHere(position));
+                that.setData({
+                  notice: true,
+                  content: "您已经到达" + data.name + ", 到站预约将取消"
+                })
+                switch (data.route) {
+                  case "route1-1f":
+                    var TAG = "RT1去程"
+                    break;
+                  case "route1-2f":
+                    var TAG = "RT1回程"
+                    break;
+                  case "route2-1f":
+                    var TAG = "RT2去程"
+                    break;
+                  case "route2-2f":
+                    var TAG = "RT2回程"
+                    break;
+                }
+                let Tag = "ALLdatalist[" + index + "].Tag";
+                let Flag = "ALLdatalist[" + index + "].reserve";
+                wx.cloud.callFunction({
+                    name: "reserve",
+                    data: {
+                      route: data.route,
+                      id: data._id,
+                      flag: false,
+                    }
+                  }).then(res => {
+                    console.log("成功取消预约", res)
+                    wx.stopLocationUpdate();
+                    that.setData({
+                      [Tag]: TAG,
+                      [Flag]: false,
+                    })
+                    data.reserve = false;
+                    console.log(data.reserve)
+                  })
+                  .catch(res => {
+                    console.log("改变预约状态失败", res)
+                  })
+
+              }
 
             })
             switch (options.currentTarget.dataset.item.route) {
@@ -150,11 +198,11 @@ Page({
                 var TAG = "RT2回程"
                 break;
             }
-            
+
 
             let Tag = "ALLdatalist[" + index + "].Tag";
             let Flag = "ALLdatalist[" + index + "].reserve"
-           
+
 
 
             wx.cloud.callFunction({
@@ -229,7 +277,7 @@ Page({
                   flag: false,
                 }
               }).then(res => {
-                
+
                 wx.stopLocationUpdate();
 
                 that.setData({
@@ -273,19 +321,19 @@ Page({
       }
     })
     wx.onLocationChange(function (res) { //持续获得位置
-      console.log('location change', res);
       position = {
         'latitude': data.latitude,
         'longitude': data.longitude,
         'curLatitude': res.latitude,
         'curLongitude': res.longitude,
+        'name': data.name
       }
 
       console.log(position);
       console.log(that.ifHere(position));
       if (that.ifHere(position)) {
         wx.stopLocationUpdate()
-        console.log("!!!"+that.ifHere(position));
+        console.log("!!!" + that.ifHere(position));
 
         that.setData({
           notice: true,
@@ -293,23 +341,22 @@ Page({
         })
 
 
-        //点击触发我将会迟到选项,在此之前判断①是否过站，②是否到达班车运营时间
 
         switch (data.route) {
           case "route1-1f":
-            
+
             var TAG = "RT1去程"
             break;
           case "route1-2f":
-            
+
             var TAG = "RT1回程"
             break;
           case "route2-1f":
-            
+
             var TAG = "RT2去程"
             break;
           case "route2-2f":
-           
+
             var TAG = "RT2回程"
             break;
         }
@@ -348,9 +395,9 @@ Page({
     var time = new Date(); //实时时间
     var starttime0 = new Date(); //去程开始时间
     starttime0.setHours(7);
-    starttime0.setMinutes(40);
+    starttime0.setMinutes(30);
     var stoptime0 = new Date(); //去程结束时间
-    stoptime0.setHours(19);
+    stoptime0.setHours(9);
     stoptime0.setMinutes(20);
     var starttime1 = new Date(); //回程开始时间
     starttime1.setHours(18); //Should be 18
@@ -383,8 +430,8 @@ Page({
       }
     }).then(res => {
       console.log(res.result.openid)
-      if (true) { //res.result.openid == "oB9mv5ZPafuTiWT9dSpS3cglffG8") {
-        if (that.ifRunTime("route1-1f")) {
+      if (true) { //res.result.openid == "oB9mv5XpFxSS9Yni0GL92Wijqznc") {
+        if (true) { //that.ifRunTime("route1-1f")) {
           that.setData({
             routeflag: true,
             routeurl: "../getloaction/getlocation?route=route1-1f",
@@ -399,7 +446,7 @@ Page({
 
         }
         console.log("route1-1's driver")
-      } else if (res.result.openid == "123") {
+      } else if (res.result.openid == "oB9mv5c8ONADNylM5UqmXJBUg_Aw") {
         if (that.ifRunTime("route2-1f")) {
           that.setData({
             routeflag: true,
@@ -434,7 +481,8 @@ Page({
             if (res.data[i]['reserve'] == true) {
               res.data[i]['Tag'] = "RT1去程, 已预约"
               console.log(res.data[i]);
-              that.Reserve(res.data[i], i) //进入页面时重新载入定位检测
+              this.Reserve(res.data[i],i)
+             
             } else {
               res.data[i]['Tag'] = "RT1去程"
             }
@@ -444,7 +492,7 @@ Page({
           this.setData({
             ALLdatalist: ALLdatalist
           })
-          
+
 
           //console.log("datalist:", datalist.data)
         })
@@ -466,8 +514,7 @@ Page({
 
             if (res.data[i]['reserve'] == true) {
               res.data[i]['Tag'] = "RT1回程, 已预约"
-              that.Reserve(res.data[i], i) //进入页面时重新载入定位检测
-
+              this.Reserve(res.data[i],i)
             } else {
               res.data[i]['Tag'] = "RT1回程"
             }
@@ -496,7 +543,8 @@ Page({
             res.data[i]['route'] = 'route2-1f'
             if (res.data[i]['reserve'] == true) {
               res.data[i]['Tag'] = "RT2去程, 已预约"
-              that.Reserve(res.data[i], i) //进入页面时重新载入定位检测
+              this.Reserve(res.data[i],i)
+              
             } else {
               res.data[i]['Tag'] = "RT2去程"
             }
@@ -524,7 +572,8 @@ Page({
             res.data[i]['route'] = 'route2-2f'
             if (res.data[i]['reserve'] == true) {
               res.data[i]['Tag'] = "RT2回程, 已预约"
-              that.Reserve(res.data[i], i) //进入页面时重新载入定位检测
+              this.Reserve(res.data[i],i)
+              
             } else {
               res.data[i]['Tag'] = "RT2回程"
             }

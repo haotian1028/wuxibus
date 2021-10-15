@@ -1,7 +1,13 @@
 <!--pages/getloaction/getlocation.wxml-->
 
-这是{{routemsg}}的专属页面，请授权本小程序在的定位功能在前后台运行的权限，车辆运行时请点击上传位置按钮，并保持其开启状态，在此期间可以退出此页面。车辆到达时请点击停止位置上传按钮。
-
-<l-button type="default" bind:lintap="onclick" l-button size="long">{{startLocation}}</l-button>
-<l-button type="default" bind:lintap="stopLocation" l-button size="long" type="success">{{stopLocation}}</l-button>
+<l-card type="primary"
+          plaintext="{{true}}"
+        
+          title="这是{{routemsg}}的专属页面">
+    <view class="content">
+      请授权本小程序在的定位功能在前后台运行的权限，车辆运行时请点击上传位置按钮，并保持其开启状态，在此期间可以退出此页面。车辆到达时请点击停止位置上传按钮。
+    </view>
+  </l-card>
+<l-button type="default" bind:lintap="onclick" l-button size="long" shape="square">{{startLocation}}</l-button>
+<l-button type="default" bind:lintap="stopLocation" l-button size="long" type="success" shape="square">{{stopLocation}}</l-button>
 {{stop}}

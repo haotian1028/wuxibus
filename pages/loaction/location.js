@@ -12,12 +12,12 @@ Page({
     var time = new Date(); //实时时间
     var starttime0 = new Date(); //去程开始时间
     starttime0.setHours(7);
-    starttime0.setMinutes(40);
+    starttime0.setMinutes(30);
     var stoptime0 = new Date(); //去程结束时间
     stoptime0.setHours(9);
     stoptime0.setMinutes(20);
     var starttime1 = new Date(); //回程开始时间
-    starttime1.setHours(8); //Should be 18
+    starttime1.setHours(18); //Should be 18
     starttime1.setMinutes(1);
     var stoptime1 = new Date(); //回程结束时间
     stoptime1.setHours(19);

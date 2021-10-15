@@ -132,7 +132,7 @@ Page({
     var time = new Date(); //实时时间
     var starttime0 = new Date(); //去程开始时间
     starttime0.setHours(7);
-    starttime0.setMinutes(40);
+    starttime0.setMinutes(30);
     var stoptime0 = new Date(); //去程结束时间
     stoptime0.setHours(19);
     stoptime0.setMinutes(20);

@@ -26,6 +26,10 @@
         <l-list left-gap='20' title="{{routemsg}}" link-type="navigateTo" url="{{routeurl}}" />
     </block>
 
+    <block >
+        <l-list left-gap='20' title="收藏的站点:"  />
+    </block>
+
 
     <block wx:for="{{ALLdatalist}}" wx:key="index">
         <l-card type="avatar" l-class="card" image="/icon/favor.png" title="{{item.name}}" describe="收藏的站点"
